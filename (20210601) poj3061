@@ -1,0 +1,61 @@
+// Memory: 548K; Time: 79ms; Code Length: 1099B
+
+// technique for resolving the time limit issue: 尺取法
+
+#include <stdio.h>
+
+int main(void)
+{
+    unsigned int samples;                   // the number of total samples
+    unsigned int n;                         // the length of the sequence
+    unsigned int s;                         // the baseline of sum
+    
+    unsigned int seq[100000];               // the sequence
+
+    unsigned int i,j;
+
+    unsigned int sum;
+    unsigned int ans;
+    unsigned int st, en;
+
+    scanf("%d",&samples);
+    
+    for (i=0; i<samples; i++)
+    {
+        scanf("%d%d",&n,&s);
+
+        for (j=0; j<n; j++)
+        {
+            scanf("%d",&seq[j]);
+        }
+
+        sum=0;
+        ans = 100000;
+        st=0;
+        en=0;
+
+      // 尺取法
+	    while(1)
+      {
+      
+         // sum of entries of qualified subsequence     
+		     while(en<n && sum<s)
+			   sum = sum+seq[en++];
+
+		     if(sum<s) break;
+
+         if (en-st<ans)
+		         ans=en-st;              // en-st = the length of qualified subsequence
+
+		     sum = sum-seq[st++];
+	    }
+
+	    if (ans==100000) 
+         ans=0;
+        
+      printf("%d\n",ans);
+
+    }
+
+    return 0;
+}
